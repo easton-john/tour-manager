@@ -2,6 +2,11 @@ const { assert } = require('chai');
 const request = require('./request');
 const { dropCollection } = require('./db');
 
+const checkOk = res => {
+    assert.equal(res.status, 200, 'expected 200 http status code');
+    return res;
+};
+
 describe('Tour API', () => {
 
     beforeEach(() => dropCollection('tours'));
@@ -10,6 +15,7 @@ describe('Tour API', () => {
         return request
             .post('/api/tours')
             .send(tour)
+            .then(checkOk)
             .then(({ body }) => body);
     }
 
@@ -42,6 +48,7 @@ describe('Tour API', () => {
                 cuteCats = _cuteCats;
                 return request.get('/api/tours');
             })
+            .then(checkOk)
             .then(({ body }) => {
                 assert.deepEqual(body, [whiskeyPirates, cuteCats]);
             });
