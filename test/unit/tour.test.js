@@ -41,4 +41,13 @@ describe('Circus Tour API', () => {
         const tour = new Tour({ title: 'Whiskey Pirates' });
         assert.equal(tour.launchDate.getDate(), date);
     });
+
+    it('validates attendance is no less than 1', () => {
+        const tour = new Tour({
+            title: 'Raining bunnies',
+            stops: { attendance: 0 }
+        });
+        const errors = getErrors(tour.validateSync(), 1);
+        assert.equal(errors['stops.attendance'].kind, 'min');
+    });
 });
