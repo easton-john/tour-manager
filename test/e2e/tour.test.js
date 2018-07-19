@@ -27,5 +27,12 @@ describe('Tour API', () => {
         assert.isOk(whiskeyPirates._id);
     });
 
+    it('gets a tour by id', () => {
+        return request
+            .get(`/api/tours/${whiskeyPirates._id}`)
+            .then(({ body }) => {
+                assert.deepEqual(body._id, whiskeyPirates._id);
+            });
+    });
 
 });
