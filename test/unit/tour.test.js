@@ -1,5 +1,6 @@
 const { assert } = require('chai');
 const Tour = require('../../lib/models/tour');
+const { getErrors } = require('./helpers');
 
 describe('Circus Tour API', () => {
 
@@ -27,5 +28,11 @@ describe('Circus Tour API', () => {
         delete json._id;
         assert.deepEqual(json, data);
 
+    });
+
+    it('validates that a title is required', () => {
+        const tour = new Tour({});
+        const errors = getErrors(tour.validateSync(), 1);
+        assert.equal(errors.title.kind, 'required');
     });
 });
