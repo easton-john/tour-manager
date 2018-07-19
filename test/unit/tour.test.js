@@ -9,7 +9,7 @@ describe('Circus Tour API', () => {
             title: 'Flying Monkeys',
             activities: ['Monkeys playing instruments and such'],
             launchDate: new Date(2018, 8, 22),
-            stops: {
+            stops: [{
                 location: {
                     city: 'Portland',
                     state: 'Oregon',
@@ -20,12 +20,13 @@ describe('Circus Tour API', () => {
                     condition: 'Summertime heat'
                 },
                 attendance: 20
-            }
+            }]
         };
 
         const tour = new Tour(data);
         const json = tour.toJSON();
         delete json._id;
+        json.stops.forEach(s => delete s._id);
         assert.deepEqual(json, data);
 
     });
@@ -48,6 +49,7 @@ describe('Circus Tour API', () => {
             stops: { attendance: 0 }
         });
         const errors = getErrors(tour.validateSync(), 1);
-        assert.equal(errors['stops.attendance'].kind, 'min');
+        assert.equal(errors['stops.0.attendance'].kind, 'min');
     });
 });
+
