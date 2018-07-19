@@ -35,4 +35,16 @@ describe('Tour API', () => {
             });
     });
 
+    it('gets a list of all the tours', () => {
+        let cuteCats;
+        return save({ title: 'Cute Cats' })
+            .then(_cuteCats => {
+                cuteCats = _cuteCats;
+                return request.get('/api/tours');
+            })
+            .then(({ body }) => {
+                assert.deepEqual(body, [whiskeyPirates, cuteCats]);
+            });
+    });
+
 });
