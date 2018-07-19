@@ -56,7 +56,7 @@ describe('Tour API', () => {
             });
     });
 
-    it.skip('get location data', () => {
+    it.skip('will get location data from Wunderground API', () => {
         return getStopsInfo('97070')
             .then(data => {
                 console.log(data);
