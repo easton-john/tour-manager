@@ -1,6 +1,8 @@
+
 const { assert } = require('chai');
 const request = require('./request');
 const { dropCollection } = require('./db');
+const getStopsInfo = require('../../weather-service-example');
 
 const checkOk = res => {
     assert.equal(res.status, 200, 'expected 200 http status code');
@@ -51,6 +53,13 @@ describe('Tour API', () => {
             .then(checkOk)
             .then(({ body }) => {
                 assert.deepEqual(body, [whiskeyPirates, cuteCats]);
+            });
+    });
+
+    it.skip('get location data', () => {
+        return getStopsInfo('97070')
+            .then(data => {
+                console.log(data);
             });
     });
 
