@@ -35,4 +35,10 @@ describe('Circus Tour API', () => {
         const errors = getErrors(tour.validateSync(), 1);
         assert.equal(errors.title.kind, 'required');
     });
+
+    it('provides a default value if date is not specified', () => {
+        const date = new Date().getDate();
+        const tour = new Tour({ title: 'Whiskey Pirates' });
+        assert.equal(tour.launchDate.getDate(), date);
+    });
 });
