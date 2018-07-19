@@ -1,18 +1,5 @@
 const { assert } = require('chai');
-//const createMiddleware = require('../../lib/util/weather-info');
-
-
-
-function createMiddleware(api) {
-    return (req, res, next) => {
-        return api('94770')
-            .then(data => {
-                req.body.weather = data.weather;
-                req.body.location = data.location;
-                next();
-            });
-    };
-}
+const createMiddleware = require('../../lib/util/create-middleware');
 
 describe('wunderground middleware', () => {
 
@@ -27,10 +14,17 @@ describe('wunderground middleware', () => {
             temperature: 85,
             condition: 'More sun'
         };
+        
         const location = {
             city: 'Wilsonville',
             state: 'Oregon',
             zip: 94770
+        };
+    
+        const req = {
+            body: {
+                zip: '94770'
+            }
         };
 
         const wunderground = zip => {
@@ -42,20 +36,15 @@ describe('wunderground middleware', () => {
 
         const middleware = createMiddleware(wunderground);
     
-
+        
         const next = () => {
             assert.deepEqual(req.body.weather, weather);
             assert.deepEqual(req.body.location, location);
             
             done();
         };
-
-        const req = {
-            body: {
-                zip: '94770'
-            }
-        };
-
+        
         middleware(req, null, next);
+
     });
 });
