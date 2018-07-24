@@ -13,7 +13,7 @@ describe('Circus Tour API', () => {
                 location: {
                     city: 'Portland',
                     state: 'Oregon',
-                    zip: 94770
+                    zip: '94770'
                 },
                 weather: {
                     temperature: 80,

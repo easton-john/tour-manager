@@ -18,7 +18,7 @@ describe('wunderground middleware', () => {
         const location = {
             city: 'Wilsonville',
             state: 'Oregon',
-            zip: 94770
+            zip: '94770'
         };
     
         const req = {

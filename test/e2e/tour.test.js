@@ -63,4 +63,21 @@ describe('Tour API', () => {
             });
     });
 
+    it('POSTs a stop to a tour', () => {
+        const data = { zip: '97070' };
+        const location = {
+            city: 'Wilsonville',
+            state: 'OR',
+            zip: '97070'
+        };
+
+        return request
+            .post(`/api/tours/${whiskeyPirates._id}/stops`)
+            .send(data)
+            .then(checkOk)
+            .then(({ body }) => {
+                assert.deepEqual(body.location, location);
+            });
+    });
+
 });

@@ -10,16 +10,22 @@ const getLocation = zip => `http://api.wunderground.com/api/${apiKey}/conditions
 
 function processData(data) {
     return {
-        temperature: data.current_observation.temp_f,
-        condition: data.current_observation.weather,
-        city: data.current_observation.display_location.city,
-        state: data.current_observation.display_location.state,
-        zip: data.current_observation.display_location.zip
+        
+        location: {
+            city: data.current_observation.display_location.city,
+            state: data.current_observation.display_location.state,
+            zip: data.current_observation.display_location.zip
+        },
+        weather: {
+            temperature: data.current_observation.temp_f,
+            condition: data.current_observation.weather,
+        }
     };
 }
 
 const get = url => request.get(url).then(res => res.body);
 
-module.exports = function getStopsInfo(zip) {
-    return get(getLocation(zip)).then(processData);
+module.exports = function getStopInfo(zip) {
+    return get(getLocation(zip))
+        .then(processData);
 };
